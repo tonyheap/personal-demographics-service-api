@@ -18,7 +18,12 @@
     <RouteRule name="NoRoute">
         <Condition>request.verb == "OPTIONS" AND request.header.origin != null AND request.header.Access-Control-Request-Method != null</Condition>
     </RouteRule>
+    <RouteRule name="sync-wrap">
+      <Condition>request.verb = "PATCH" and request.header.prefer != "respond-async"</Condition>
+      <TargetEndpoint>sync-wrap</TargetEndpoint>
+    </RouteRule>
     <RouteRule name="ig3">
-        <TargetEndpoint>ig3</TargetEndpoint>
+      <Condition>request.verb != "PATCH" or request.header.prefer = "respond-async"</Condition>
+      <TargetEndpoint>ig3</TargetEndpoint>
     </RouteRule>
 </ProxyEndpoint>
